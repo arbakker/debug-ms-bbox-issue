@@ -112,7 +112,7 @@ Url: http://localhost/?SERVICE=WFS&SERVICE=WFS&version=2.0.0&service=wfs&request
 1001
 ```
 
-## Changing geometrytype data
+## Changing geometry type of data
 
 To verify if the behaviour still occurs with a point layer based first generate a point layer based on the `beheer_leiding` layer:
 
