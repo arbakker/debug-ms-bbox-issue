@@ -29,6 +29,10 @@ The bbox `80034.6,452005.1,81976.8,453965.8` retrieves 2000 features exactly. No
 The MS user email list seemed to suggest that some features could be skipped when the `rowid` column contains gaps,  because paging relies on the `rowid` column. So I ensured the `rowid` column (and therefore the fid) in the GeoPackage does not have any gaps. But this does not seem to affect the behaviour.
 
 
+![image](https://user-images.githubusercontent.com/3216462/117975058-908d9f00-b32e-11eb-9146-57037e0b6efb.png)
+
+**The two bounding boxes and the resulting featuresets.**
+
 ## Different datasource types
 
 To see if I could reproduce the issue with different datasource types, I tried to reproduce the issue with GeoJSON and PostGIS as a datasource. Unfortunately this does not provide any insight on the cause of the issue. 
