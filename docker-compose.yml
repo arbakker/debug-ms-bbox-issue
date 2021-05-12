@@ -1,0 +1,24 @@
+version: '2.1'
+services:
+  mapserver:
+    image: docker.io/pdok/mapserver:7.6.2-lighttpd
+    restart: unless-stopped
+    ports:
+      - 80:80
+    labels:
+      nl.pdok.application.group: "mapserver"
+      SERVICE_CHECK_HTTP: "/"
+      SERVICE_NAME: gwsw-wfs
+    volumes:
+      - ./assets:/srv/data/
+    environment:
+      application_container: gwsw-wfs
+      MS_MAPFILE: /srv/data/debug.map
+  db:
+    image: mdillon/postgis:10-alpine
+    restart: always
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_USER: 'postgres'
+      POSTGRES_PASSWORD: 'postgres'

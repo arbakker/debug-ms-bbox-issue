@@ -1,0 +1,120 @@
+MAP
+  NAME          ""
+  CONFIG        "MS_ERRORFILE" "stderr"
+  EXTENT        5000 250000 280000 725000
+  UNITS         meters
+  STATUS        ON
+  DEBUG         5
+
+  WEB
+    METADATA
+      "ows_enable_request"               "*"
+      "ows_fees"                         "NONE"
+      "ows_contactorganization"          "PDOK"
+      "ows_schemas_location"             "http://schemas.opengis.net"
+      "ows_service_onlineresource"       "http://localhost"
+      "ows_contactperson"                "KlantContactCenter PDOK"
+      "ows_contactposition"              "pointOfContact"
+      "ows_contactvoicetelephone"        ""
+      "ows_contactfacsimiletelephone"    ""
+      "ows_addresstype"                  "Work"
+      "ows_address"                      ""
+      "ows_city"                         "Apeldoorn"
+      "ows_stateorprovince"              ""
+      "ows_postcode"                     ""
+      "ows_country"                      "Nederland"
+      "ows_contactelectronicmailaddress" "BeheerPDOK@kadaster.nl"
+      "ows_hoursofservice"               ""
+      "ows_contactinstructions"          ""
+      "ows_role"                         ""      
+      "ows_accessconstraints"            "otherRestrictions;http://creativecommons.org/publicdomain/mark/1.0/deed.nl;Geen beperkingen"      
+    END
+  END
+
+  OUTPUTFORMAT
+    NAME "GEOJSON"       # format name (visible as format in the 1.0.0 capabilities)
+    DRIVER "OGR/GEOJSON"
+    MIMETYPE "application/json; subtype=geojson"
+    FORMATOPTION "STORAGE=stream"
+    FORMATOPTION "FORM=SIMPLE"
+    FORMATOPTION "USE_FEATUREID=true"
+  END
+
+  OUTPUTFORMAT
+    NAME "JSON"
+    DRIVER "OGR/GEOJSON"
+    MIMETYPE "application/json"
+    FORMATOPTION "STORAGE=stream"
+    FORMATOPTION "FORM=SIMPLE"
+    FORMATOPTION "USE_FEATUREID=true"    
+  END
+
+  OUTPUTFORMAT
+    NAME "XML"
+    DRIVER "OGR/GML"
+    MIMETYPE "text/xml"
+    FORMATOPTION "STORAGE=stream"
+    FORMATOPTION "FORM=SIMPLE"
+    FORMATOPTION "USE_FEATUREID=true"    
+  END
+
+  OUTPUTFORMAT
+    NAME "GML3"
+    DRIVER "OGR/GML"
+    MIMETYPE "text/xml; subtype=gml/3.1.1"
+    FORMATOPTION "STORAGE=stream"
+    FORMATOPTION "FORM=SIMPLE"
+    FORMATOPTION "USE_FEATUREID=true"    
+  END
+  
+  WEB
+    METADATA
+      "ows_title"                      "Stedelijk water (ook riolering)"
+      "wfs_languages"                  "eng"
+      "wfs_extent"                     "5000 250000 280000 725000"
+      "wfs_namespace_prefix"           "gwsw"
+      "wfs_namespace_uri"              "http://stedelijkwater.geonovum.nl"
+      "wfs_onlineresource"             "http://localhost?SERVICE=WFS"
+      "wfs_maxfeatures"                "1000"
+      "wfs_getfeature_formatlist"      "GEOJSON,JSON,XML,GML3"
+      "wfs_srs"                         "EPSG:28992 EPSG:4326"
+    END 
+  END
+
+  LAYER
+    NAME "beheer_leiding"
+    STATUS ON
+    TYPE LINE
+    DEBUG 5
+    
+    METADATA
+      "wfs_title"               "Beheergegevens Leiding"
+      "wfs_abstract"            "Beheergegevens van de leiding"
+      
+      "wfs_extent"              "5000 250000 280000 725000"
+      "wfs_include_items"       "all"
+      "wfs_enable_request"      "*"
+      "gml_include_items"       "all"
+      "gml_optional_items"      "all"
+      "gml_featureid"           "uri"
+      "gml_geometries"          "geometry"
+    END
+
+   
+    PROJECTION
+      "init=epsg:28992"
+    END
+    
+    # OGR CONNECTION
+    CONNECTIONTYPE ogr
+    CONNECTION "/srv/data/data.gpkg"
+    DATA "beheer_leiding"
+
+    # POSTGIS CONNECTION
+    # CONNECTIONTYPE postgis
+    # CONNECTION "host=db dbname=postgres user=postgres password=postgres port=5432"
+    # DATA "geometry from beheer_leiding"
+
+    PROCESSING "CLOSE_CONNECTION=DEFER"    
+  END
+END
